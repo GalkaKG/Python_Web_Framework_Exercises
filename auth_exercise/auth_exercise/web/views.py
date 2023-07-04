@@ -8,9 +8,9 @@ class RegisterUserView(views.CreateView):
     form_class = auth_forms.UserCreationForm
 
 
-class LoginUserView():
+class LoginUserView(views.View):
     pass
 
 
-class LogoutUserView():
+class LogoutUserView(views.View):
     pass

@@ -7,3 +7,5 @@ urlpatterns = (
     path('login/', LoginUserView.as_view(), name='login_user'),
     path('logout/', LoginUserView.as_view(), name='logout_user'),
 )
+
+# Password:  pAss789$

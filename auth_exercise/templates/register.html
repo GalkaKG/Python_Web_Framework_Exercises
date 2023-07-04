@@ -5,8 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+    {{ request.user }}
+
     <form action="{% url 'register_user' %}" method="post">
-        {{ form }}
+        {{ form.as_p }}
 
        <div>
             <button>Register</button>
