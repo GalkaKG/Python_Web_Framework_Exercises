@@ -1,3 +1,16 @@
 from django.shortcuts import render
+from django.views import generic as views
+from django.contrib.auth import forms as auth_forms
 
-# Create your views here.
+
+class RegisterUserView(views.CreateView):
+    template_name = 'register.html'
+    form_class = auth_forms.UserCreationForm
+
+
+class LoginUserView():
+    pass
+
+
+class LogoutUserView():
+    pass
