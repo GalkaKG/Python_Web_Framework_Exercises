@@ -25,7 +25,10 @@ class RegisterUserForm(auth_forms.UserCreationForm):
 
 class RegisterUserView(views.CreateView):
     template_name = 'register.html'
+    # Static way to get form
     form_class = RegisterUserForm
+
+    # Static way for providing success url
     success_url = reverse_lazy('register_user')
 
     def form_valid(self, form):
@@ -34,6 +37,14 @@ class RegisterUserView(views.CreateView):
         login(self.request, self.object)
 
         return result
+
+    # Dynamic way for providing success url
+    def get_success_url(self):
+        pass
+
+    # Dynamic way to get form
+    def get_form_class(self):
+        pass
 
 
 class LoginUserView(LoginView):
@@ -53,6 +64,13 @@ def func_view(request):
     pass
 
 
+class ViewWithPermission(mixins.PermissionRequiredMixin, views.TemplateView):
+    template_name = 'users_list.html'
+
+
 class UsersListView(views.ListView, mixins.LoginRequiredMixin):
     model = UserModel
     template_name = 'users_list.html'
+
+    # Login URL only for this view
+    # login_url = 'custom-login-url'
