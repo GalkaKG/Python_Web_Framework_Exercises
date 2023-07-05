@@ -36,8 +36,8 @@ class RegisterUserView(views.CreateView):
 
 
 class LoginUserView(LoginView):
-    template_name = 'register.html'
-
+    template_name = 'login.html'
+    extra_context = {'title': 'login', 'link_title': 'register'}
 
 
 class LogoutUserView(views.View):
