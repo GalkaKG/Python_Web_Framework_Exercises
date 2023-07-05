@@ -1,9 +1,10 @@
 from django import forms
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic as views
-from django.contrib.auth import forms as auth_forms, login, authenticate, get_user_model
+from django.contrib.auth import forms as auth_forms, login, authenticate, get_user_model, mixins
 from django.utils.translation import gettext_lazy as _
 
 
@@ -47,6 +48,11 @@ class LogoutUserView(views.View):
 UserModel = get_user_model()
 
 
-class UsersListView(views.ListView):
+@login_required
+def func_view(request):
+    pass
+
+
+class UsersListView(views.ListView, mixins.LoginRequiredMixin):
     model = UserModel
     template_name = 'users_list.html'
