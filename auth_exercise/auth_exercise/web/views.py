@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic as views
@@ -34,8 +35,9 @@ class RegisterUserView(views.CreateView):
         return result
 
 
-class LoginUserView(views.View):
-    pass
+class LoginUserView(LoginView):
+    template_name = 'register.html'
+
 
 
 class LogoutUserView(views.View):
