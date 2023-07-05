@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic as views
-from django.contrib.auth import forms as auth_forms, login, authenticate
+from django.contrib.auth import forms as auth_forms, login, authenticate, get_user_model
 from django.utils.translation import gettext_lazy as _
 
 
@@ -37,8 +37,16 @@ class RegisterUserView(views.CreateView):
 
 class LoginUserView(LoginView):
     template_name = 'login.html'
-    extra_context = {'title': 'login', 'link_title': 'register'}
+    # extra_context = {'title': 'login', 'link_title': 'register'}
 
 
 class LogoutUserView(views.View):
     pass
+
+
+UserModel = get_user_model()
+
+
+class UsersListView(views.ListView):
+    model = UserModel
+    template_name = 'users_list.html'
