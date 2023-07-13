@@ -20,4 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('auth_exercise.web.urls')),
+    path('cache/', include('auth_exercise.cache_session_signals_middleware.urls')),
 ]
