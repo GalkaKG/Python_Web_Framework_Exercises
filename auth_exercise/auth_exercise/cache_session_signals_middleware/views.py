@@ -10,5 +10,5 @@ def index(request):
         'count': random.randint(1, 1000)
     }
 
-    return render(request, 'cache.html', context)
+    return render(request, 'cache_session_signals_middleware/cache.html', context)
 

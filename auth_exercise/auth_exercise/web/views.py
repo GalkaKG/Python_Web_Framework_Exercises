@@ -7,6 +7,8 @@ from django.views import generic as views
 from django.contrib.auth import forms as auth_forms, login, authenticate, get_user_model, mixins
 from django.utils.translation import gettext_lazy as _
 
+from auth_exercise.web.models import Article
+
 
 class RegisterUserForm(auth_forms.UserCreationForm):
     content = forms.BooleanField()
@@ -24,7 +26,7 @@ class RegisterUserForm(auth_forms.UserCreationForm):
 
 
 class RegisterUserView(views.CreateView):
-    template_name = 'register.html'
+    template_name = 'web/register.html'
     # Static way to get form
     form_class = RegisterUserForm
 
@@ -48,7 +50,7 @@ class RegisterUserView(views.CreateView):
 
 
 class LoginUserView(LoginView):
-    template_name = 'login.html'
+    template_name = 'web/login.html'
     # extra_context = {'title': 'login', 'link_title': 'register'}
 
 
@@ -65,12 +67,19 @@ def func_view(request):
 
 
 class ViewWithPermission(mixins.PermissionRequiredMixin, views.TemplateView):
-    template_name = 'users_list.html'
+    template_name = 'web/users_list.html'
 
 
 class UsersListView(views.ListView, mixins.LoginRequiredMixin):
     model = UserModel
-    template_name = 'users_list.html'
+    template_name = 'web/users_list.html'
 
     # Login URL only for this view
     # login_url = 'custom-login-url'
+
+
+class PaginateView(views.ListView):
+    template_name = 'web/paginate.html'
+    model = Article
+    context_object_name = 'articles'
+    paginate_by = 5
