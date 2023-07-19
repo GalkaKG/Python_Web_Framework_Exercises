@@ -82,4 +82,4 @@ class PaginateView(views.ListView):
     template_name = 'web/paginate.html'
     model = Article
     context_object_name = 'articles'
-    paginate_by = 5
+    paginate_by = 6
