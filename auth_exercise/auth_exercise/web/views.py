@@ -112,7 +112,8 @@ class ArticleView(APIView):
                 'message': 'Article created successfully.',
                 'data': serializer.data,
             }
-            return Response(response_data, status=status.HTTP_201_CREATED)
+            # return Response(response_data, status=status.HTTP_201_CREATED)
+            return redirect('paginate')
         else:
             articles = Article.objects.all()
             serializer = ArticleSerializers(articles, many=True)
