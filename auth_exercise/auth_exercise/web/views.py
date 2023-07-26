@@ -1,12 +1,21 @@
 from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth import forms as auth_forms, login, authenticate, get_user_model, mixins
 from django.utils.translation import gettext_lazy as _
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
+
+
+from auth_exercise.web.forms import ArticleBaseForm
+from auth_exercise.web.serializers import ArticleSerializers
 from auth_exercise.web.models import Article
 
 
@@ -70,7 +79,7 @@ class ViewWithPermission(mixins.PermissionRequiredMixin, views.TemplateView):
     template_name = 'web/users_list.html'
 
 
-class UsersListView(views.ListView, mixins.LoginRequiredMixin):
+class UsersListView(views.ListView, mixins.LoginRequiredMixin, APIView):
     model = UserModel
     template_name = 'web/users_list.html'
 
@@ -83,3 +92,28 @@ class PaginateView(views.ListView):
     model = Article
     context_object_name = 'articles'
     paginate_by = 5
+
+
+class ArticleView(APIView):
+    template_name = 'web/create-article.html'
+
+    def get(self, request):
+        articles = Article.objects.all()
+        serializer = ArticleSerializers(articles, many=True)
+        form = ArticleBaseForm()
+        return render(request, self.template_name, {'articles': serializer.data, 'form': form})
+
+    def post(self, request):
+        form = ArticleBaseForm(request.POST)
+        if form.is_valid():
+            article = form.save()
+            serializer = ArticleSerializers(article)
+            response_data = {
+                'message': 'Article created successfully.',
+                'data': serializer.data,
+            }
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        else:
+            articles = Article.objects.all()
+            serializer = ArticleSerializers(articles, many=True)
+            return render(request, self.template_name, {'articles': serializer.data, 'form': form})

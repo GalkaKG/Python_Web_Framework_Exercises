@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button id="button" type="submit">Submit</button>
+</form>
+
+    <script src="{% static 'js/create-article.js' %}"></script>
+</body>
+</html>
