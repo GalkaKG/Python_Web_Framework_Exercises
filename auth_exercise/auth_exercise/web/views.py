@@ -117,3 +117,4 @@ class ArticleView(APIView):
             articles = Article.objects.all()
             serializer = ArticleSerializers(articles, many=True)
             return render(request, self.template_name, {'articles': serializer.data, 'form': form})
+
